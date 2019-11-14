@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+    <h1>All my jobs</h1>
+    {% for job in jobs.all %}
+        {{ job.summary }}
+     {% endfor %}
+
+</body>
+</html>
