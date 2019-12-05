@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stonebook</title>
+</head>
+<body>
+    <h1>Stonebook</h1>
+    <h2>Welcome {{ user }}</h2>
+    <hr>
+       {% for post in posts %}
+        {{ post.text }}
+        Created: {{ post.created }}
+        Last updated: {{ post.last_updated }}
+        By: {{ post.user }}
+        <hr>
+    {% endfor %}
+    <a href="{% url 'stonebookapp:groups' %}">Groups</a>
+    <hr>
+     <form action="{% url 'stonebookapp:index' %}" method="POST">
+        {% csrf_token %}
+         <p>
+           <label for="group">Choose group</label>
+       </p>
+         <select name="group" id="group">
+             {% for group in user_groups %}
+                <option value="{{ group.pk }}">{{ group.name }}</option>
+            {% endfor %}
+
+         </select>
+         <br>
+       <p>
+           <label for="text">Text</label>
+       </p>
+        <p>
+            <input type="text" id="text" name="text">       </p>
+       </p>
+        <p><input type="submit" value="OK"></p>
+    </form>
+</body>
+</html>
