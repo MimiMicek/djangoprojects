@@ -26,10 +26,10 @@ def signup(request):
         app = Celery()
         app.config_from_object('celeryconfig')
 
-        receiver = "micekpython@gmail.com"
+        receiver = "email@gmail.com"
         body = "This is your email working"
 
-        yag = yagmail.SMTP("micekpython@gmail.com")
+        yag = yagmail.SMTP("email@gmail.com")
         yag.send(
             to=receiver,
             subject="Test email working",

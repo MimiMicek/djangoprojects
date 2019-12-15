@@ -13,11 +13,11 @@
 # # def add(x, y):
 # #     return x + y
 #
-# receiver = "micekpython@gmail.com"
+# receiver = "email@gmail.com"
 # body = "Hello there from KEA"
 # #filename = "document.pdf"
 #
-# yag = yagmail.SMTP("micekpython@gmail.com")
+# yag = yagmail.SMTP("email@gmail.com")
 # yag.send(
 #     to=receiver,
 #     subject="Yagmail test with attachment",
