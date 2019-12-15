@@ -63,20 +63,42 @@
   </head>
 
   <body class="text-center">
+      <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="{% url 'socialnetworkapp:index' %}">Home</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'loginapp:login' %}">Login</a>
+              <a class="nav-item nav-link" href="{% url 'loginapp:signup' %}">Signup</a>
+              <a class="nav-item nav-link" href="{% url 'loginapp:profile' %}">My profile</a>
+              <a class="nav-item nav-link" href="{% url 'loginapp:logout' %}">Log out</a>
+            </div>
+           </div>
+        </div>
+      </nav>
+    </header>
     <form class="form-signup" action="{% url 'loginapp:signup' %}" method="POST">
        {% csrf_token %}
       <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
       <label for="user" class="sr-only">Username</label>
         <br />
-        <input type="text" id="user" name="user" placeholder="Username" class="form-control" placeholder="Email address" required autofocus>
+        <input type="text" id="user" name="user" placeholder="Username" class="form-control" placeholder="User name" required autofocus>
+        <br />
+       <label for="email" class="sr-only">Email</label>
+        <br />
+        <input type="email" id="email" name="email" placeholder="Email" class="form-control" placeholder="Email" required>
         <br />
         <label for="password" class="sr-only">Password</label>
         <br />
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
         <br />
         <label for="repeatpassword" class="sr-only">Repeat Password</label>
         <br />
-        <input type="password" id="repeatpassword" name="repeatpassword" class="form-control" placeholder="Repeat Password">
+        <input type="password" id="repeatpassword" name="repeatpassword" class="form-control" placeholder="Repeat Password" required>
         <br />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
         <br />

@@ -1,10 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
-
-#from .utils import random_string
+from keyring.tests.util import random_string
 
 
 def login(request):
@@ -42,10 +42,14 @@ def signup(request):
             context['error'] = 'Username already exists.'
             return render(request, 'loginapp/signup.html', context)
 
+        if len(User.objects.filter(email = request.POST['email'])) > 0:
+            context['error'] = 'Email already exists.'
+            return render(request, 'loginapp/signup.html', context)
+
         user = User.objects.create_user(request.POST['user'], password = request.POST['password'])
         user.save()
         dj_login(request, user)
-        return HttpResponseRedirect(reverse('socialnetworkapp:index'))
+        return HttpResponseRedirect(reverse('loginapp:login'))
 
     return render(request, 'loginapp/signup.html')
 
@@ -67,3 +71,7 @@ def reset_password(request):
             context['error'] = 'Username does not exist! Try again!'
 
     return render(request, 'loginapp/reset-password.html', context)
+
+@login_required
+def profile(request):
+    return render(request, 'loginapp/profile.html')

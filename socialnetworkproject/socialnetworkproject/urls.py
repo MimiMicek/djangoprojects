@@ -15,9 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('accounts/', include('loginapp.urls', namespace='loginapp')),
     path('social/', include('socialnetworkapp.urls', namespace='socialnetworkapp')),
     path('admin/', admin.site.urls),
 ]
+
+#if we are in a debug mode we want to add thid static pattern
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
