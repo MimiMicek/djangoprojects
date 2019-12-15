@@ -4,7 +4,11 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
-from keyring.tests.util import random_string
+import sys
+sys.path.append('/your/dir/to/tensorflow/models') # point to your tensorflow dir
+sys.path.append('/your/dir/to/tensorflow/models/slim') # point ot your slim dir
+from celery import Celery
+import yagmail
 
 
 def login(request):
@@ -49,6 +53,19 @@ def signup(request):
         user = User.objects.create_user(request.POST['user'], password = request.POST['password'])
         user.save()
         dj_login(request, user)
+
+        app = Celery()
+        app.config_from_object('celeryconfig')
+
+        receiver = "email@gmail.com"
+        body = "Congratulations, you are now a part of Social Network. Your life is officially over"
+
+        yag = yagmail.SMTP("email@gmail.com")
+        yag.send(
+            to=receiver,
+            subject="Signup confirmation for Social Network",
+            contents=body
+        )
         return HttpResponseRedirect(reverse('loginapp:login'))
 
     return render(request, 'loginapp/signup.html')
