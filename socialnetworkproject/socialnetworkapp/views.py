@@ -7,7 +7,7 @@ from rest_framework import generics
 from .models import Post
 from .serializers import PostSerializer
 
-@login_required
+#@login_required
 def index(request):
     user = User.objects.filter(pk=1)[0]
 

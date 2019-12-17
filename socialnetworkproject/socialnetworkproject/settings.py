@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'socialnetworkproject.middleware.LoginRequiredMiddleware'
 ]
 
 ROOT_URLCONF = 'socialnetworkproject.urls'
@@ -127,6 +128,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = ''
+
+#LOGIN_URL = '/accounts/login/'
+
+LOGIN_EXEMPT_URLS = (
+    r'accounts/logout$',
+    r'^accounts/signup$'
+)
 
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
 #the directory where our media files will be uploaded

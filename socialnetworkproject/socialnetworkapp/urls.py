@@ -6,7 +6,7 @@ from .views import  PostList, PostDetail
 app_name = 'socialnetworkapp'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('index', views.index, name='index'),
     path('groups', views.groups, name='groups'),
     path('join_group/<int:pk>', views.join_group, name='join_group'),
     path('leave_group/<int:pk>', views.leave_group, name='leave_group'),
