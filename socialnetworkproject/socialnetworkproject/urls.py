@@ -20,7 +20,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('accounts/', include('loginapp.urls', namespace='loginapp')),
-    path('social/', include('socialnetworkapp.urls', namespace='socialnetworkapp')),
+    path('', include('socialnetworkapp.urls', namespace='socialnetworkapp')),
+    path('api/v1/', include('socialnetworkapp.urls')),
     path('admin/', admin.site.urls),
 ]
 

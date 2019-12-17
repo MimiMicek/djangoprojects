@@ -1,21 +1,13 @@
-
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">
-
-    <title>User Profile</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/sign-in/">
+<head>
+    <meta charset="UTF-8">
+    <title>Social network</title>
+     <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/sign-in/">
 
     <!-- Bootstrap core CSS -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-{% load static %}
+
     <style>
               html,
         body {
@@ -32,7 +24,7 @@
           background-color: lightsteelblue;
         }
 
-        .profile {
+        .index {
           width: 100%;
           max-width: 330px;
           padding: 15px;
@@ -42,10 +34,9 @@
           height: auto;
         }
     </style>
-  </head>
-
-  <body class="text-center">
-      <header class="site-header">
+</head>
+<body class="text-center">
+    <header class="site-header index">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
           <a class="navbar-brand mr-4" href="{% url 'socialnetworkapp:index' %}">Home</a>
@@ -64,39 +55,37 @@
         </div>
       </nav>
     </header>
-    {% block content %}
-    <div class="content-section profile">
-      <div class="media">
-        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-        <div class="media-body">
-          <h2 class="account-heading">{{ user.username }}</h2>
-          <p class="text-secondary">{{ user.email }}</p>
-        </div>
-      </div>
-      <!--  <form class="form-login" action="." method="POST">
-      {% csrf_token %}
-      <p>Hello {{user}}! You are now logged in</p>
-      <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
-      <label for="user" class="sr-only">Username</label>
-      <br />
-      <input type="text" id="user" name="user" class="form-control" placeholder="Username" required autofocus>
-      <br />
-      <label for="password" class="sr-only">Password</label>
-      <br />
-      <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-      <br />
-      <button class="btn btn-lg btn-primary btn-block" value="Submit" type="submit">Log in</button>
-      <br />
-      {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif  %}
+    <hr>
+     <h1>Groups</h1>
+    <h2>User: {{ user }}</h2>
+    <hr>
+    <h2>Groups you are a member of:</h2>
+    {% for group in user_groups  %}
+        {% if not group.pk == 1 %}
+            <p>
+                <a href="{% url 'socialnetworkapp:leave_group' pk=group.pk %}">Leave Group</a>
+                - {{ group.name }}
+            </p>
+        {% endif  %}
+    {% endfor %}
+    <hr>
+    <h2>Groups you are not a member of:</h2>
+    {% for group in not_user_groups %}
+        <p><a href="{% url 'socialnetworkapp:join_group' pk=group.pk %}">Join Group</a> - {{ group.name }}</p>
+    {% endfor %}
+    <hr>
+    <form action="{% url 'socialnetworkapp:groups' %}" method="POST">
+        {% csrf_token %}
+        <p><label for="name">Name</label></p>
+        <p><input type="text" id="name" name="name"></p>
+        <p><label for="description">Description</label></p>
+        <p><input type="textarea" id="description" name="description"></p>
+        <p><input type="submit" value="OK"></p>
+    </form>
 
-      <p class="mt-5 mb-3 text-muted">&copy; 2019</p>
-    </form>-->
-    </div>
-{% endblock content %}
 
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
-  </body>
+
+</body>
 </html>
