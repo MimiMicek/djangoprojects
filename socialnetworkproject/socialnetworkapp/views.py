@@ -1,5 +1,4 @@
 from django.shortcuts import render, reverse
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from . import models
@@ -7,8 +6,8 @@ from rest_framework import generics
 from .models import Post
 from .serializers import PostSerializer
 
-#@login_required
 def index(request):
+
     user = User.objects.filter(pk=1)[0]
 
     if request.method == 'GET':
@@ -30,11 +29,13 @@ def index(request):
         post.group = models.AppGroup.objects.get(pk=request.POST['group'])
         post.user = user
         post.save()
+
         return HttpResponseRedirect(reverse('socialnetworkapp:index'))
 
     return HttpResponseBadRequest()
 
 def groups(request):
+
     user = User.objects.filter(pk=1)[0]
     if request.method == 'GET':
         user_groups = models.AppGroup.objects.filter(users__username__contains=user.username)
@@ -56,30 +57,37 @@ def groups(request):
         group.save()
         group.users.add(user)
         group.save()
+
         return HttpResponseRedirect(reverse('socialnetworkapp:groups'))
 
     return HttpResponseBadRequest()
 
 
 def join_group(request, pk):
+
     user = User.objects.filter(pk=1)[0]
     group = models.AppGroup.objects.get(pk=pk)
     group.users.add(user)
     group.save()
+
     return HttpResponseRedirect(reverse('socialnetworkapp:groups'))
 
 
 def leave_group(request, pk):
+
     user = User.objects.filter(pk=1)[0]
     group = models.AppGroup.objects.get(pk=pk)
     group.users.remove(user)
     group.save()
+
     return HttpResponseRedirect(reverse('socialnetworkapp:groups'))
 
 class PostList(generics.ListCreateAPIView):
+
     queryset =  Post.objects.all()
     serializer_class = PostSerializer
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+
     queryset = Post.objects.all()
     serializer_class = PostSerializer
